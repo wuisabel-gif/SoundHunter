@@ -55,11 +55,13 @@ This enclosure also became a small personal art project. As part of my hobby of 
 
 ### Prototype Front
 
-![SoundHunter prototype front](assert/prototype_front_removed_background.jpg)
+The front photo includes labeled dimensions showing the approximate distances between the center reference point and each sensor. The prototype is usually placed horizontally during use. It is shown vertically in this photo only to make the sensor layout and spacing easier to see.
+
+![SoundHunter prototype front](assert/prototype_front.png)
 
 ### Prototype Back
 
-![SoundHunter prototype back](assert/prototype_back_removed_background.jpg)
+![SoundHunter prototype back](assert/prototype_back.png)
 
 ### Microphone Module
 
@@ -226,6 +228,7 @@ Current goals:
 - Improve denoising
 - Build a cardboard cross-shaped enclosure
 - Test with phone ringtone and AirTag beep
+- Demo video on the way
 
 ## License
 
