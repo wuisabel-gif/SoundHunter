@@ -84,8 +84,8 @@ The front photo includes labeled dimensions showing the approximate distances be
 | --- | --- |
 | Front microphone OUT | GPIO32 |
 | Rear microphone OUT | GPIO33 |
-| Left microphone OUT | GPIO34 |
-| Right microphone OUT | GPIO35 |
+| Left microphone OUT | GPIO35 |
+| Right microphone OUT | GPIO34 |
 | All microphone VCC | 3.3V |
 | All microphone GND | GND |
 

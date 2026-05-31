@@ -11,8 +11,8 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 // Microphone ADC pins
 const int MIC_FRONT = 32;
 const int MIC_REAR  = 33;
-const int MIC_LEFT  = 34;
-const int MIC_RIGHT = 35;
+const int MIC_LEFT  = 35;
+const int MIC_RIGHT = 34;
 
 // OLED I2C pins
 const int OLED_SDA = 21;
