@@ -51,13 +51,15 @@ SoundHunter explores whether a low-cost microphone array can act like a simple a
 
 The current SoundHunter prototype is a breadboard-based build centered around an ESP32, four analog microphones, and a small OLED display. The photos below show the assembled front and rear views of the device, along with the microphone module used for acoustic sensing.
 
+This enclosure also became a small personal art project. As part of my hobby of making collages, I decorated the cardboard body with postcards, travel images, and classical music album covers that I had collected on my cupboard. I really enjoyed that process because it made the prototype feel less like a temporary electronics build and more like an object with its own character.
+
 ### Prototype Front
 
-![SoundHunter prototype front](assert/prototype_front_removed_background.png)
+![SoundHunter prototype front](assert/prototype_front_removed_background.jpg)
 
 ### Prototype Back
 
-![SoundHunter prototype back](assert/prototype_back_removed_background.png)
+![SoundHunter prototype back](assert/prototype_back_removed_background.jpg)
 
 ### Microphone Module
 
