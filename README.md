@@ -53,11 +53,11 @@ The current SoundHunter prototype is a breadboard-based build centered around an
 
 ### Prototype Front
 
-![SoundHunter prototype front](assert/prototype_front.png)
+![SoundHunter prototype front](assert/prototype_front_removed_background.png)
 
 ### Prototype Back
 
-![SoundHunter prototype back](assert/prototype_back.png)
+![SoundHunter prototype back](assert/prototype_back_removed_background.png)
 
 ### Microphone Module
 
