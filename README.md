@@ -2,6 +2,22 @@
 
 SoundHunter is an ESP32-based acoustic compass that helps locate nearby beeping devices such as AirTags, phones, alarms, or other lost electronics. It uses four analog microphone modules and a small OLED display to estimate the strongest sound direction in real time.
 
+## Table of Contents
+
+- [Motivation](#motivation)
+- [Features](#features)
+- [Hardware](#hardware)
+- [Wiring](#wiring)
+- [Physical Layout](#physical-layout)
+- [Software](#software)
+- [Getting Started](#getting-started)
+- [How It Works](#how-it-works)
+- [Current Limitations](#current-limitations)
+- [Future Product Concepts](#future-product-concepts)
+- [Future Improvements](#future-improvements)
+- [Project Status](#project-status)
+- [License](#license)
+
 ## Motivation
 
 Even with tools like AirTag and Find My, it can still be hard to find an item once you know it is nearby. An object might be inside a car, under a seat, inside a bag, or hidden in a compartment. Find My can tell you the item is close, but it does not always show the exact direction to search.
@@ -131,6 +147,42 @@ It may be less accurate when:
 - Background noise is high
 - The sound source is far away
 - Microphones are placed too close together
+
+## Future Product Concepts
+
+To explore how SoundHunter could evolve beyond its current breadboard prototype, I generated a set of speculative product concepts using ChatGPT. These concept images are not final engineering designs. Instead, they serve as visual thought experiments for how the project might develop into a more polished, consumer-facing device.
+
+The concepts examine different directions in portability, usability, sensing strategy, and industrial design. Together, they imagine SoundHunter as everything from a compact foldable search tool to a handheld directional detector or an active scanning device with servo-assisted sensing.
+
+### 1. Foldable Acoustic Compass
+
+A portable device with extendable microphone arms that increase spacing during search mode for improved directional sensing.
+
+![Foldable Acoustic Compass](assert/Option1_FAC.png)
+
+### 2. Sound Flashlight
+
+A handheld directional detector designed to work like a flashlight, allowing the user to point and sweep toward the strongest sound.
+
+![Sound Flashlight](assert/Option2_flashlight.png)
+
+### 3. Rotating Sensor Head
+
+A servo-assisted design that rotates a two-microphone head through a full scan to estimate the angle of the strongest signal.
+
+![Rotating Sensor Head](assert/Option3_rotatingsensorhead.png)
+
+### 4. SoundHunter Acoustic Hot/Cold Finder
+
+A compact pocket device that guides the user with directional arrows and signal-strength feedback as they move closer to the target.
+
+![SoundHunter Acoustic Hot/Cold Finder](assert/option4.png)
+
+### 5. AirTag Hunter Wand
+
+A slim directional wand optimized for quick left-right sweeping to locate nearby beeping devices such as AirTags.
+
+![AirTag Hunter Wand](assert/option5_airtag.png)
 
 ## Future Improvements
 
