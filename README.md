@@ -7,6 +7,7 @@ SoundHunter is an ESP32-based acoustic compass that helps locate nearby beeping 
 - [Motivation](#motivation)
 - [Features](#features)
 - [Hardware](#hardware)
+- [Current Prototype](#current-prototype)
 - [Wiring](#wiring)
 - [Physical Layout](#physical-layout)
 - [Software](#software)
@@ -45,6 +46,22 @@ SoundHunter explores whether a low-cost microphone array can act like a simple a
 | Breadboard | Prototyping |
 | Jumper wires | Connections |
 | USB cable or power bank | Power supply |
+
+## Current Prototype
+
+The current SoundHunter prototype is a breadboard-based build centered around an ESP32, four analog microphones, and a small OLED display. The photos below show the assembled front and rear views of the device, along with the microphone module used for acoustic sensing.
+
+### Prototype Front
+
+![SoundHunter prototype front](assert/prototype_front.png)
+
+### Prototype Back
+
+![SoundHunter prototype back](assert/prototype_back.png)
+
+### Microphone Module
+
+![Analog microphone sensor module](assert/microphone_sensor.png)
 
 ## Wiring
 
