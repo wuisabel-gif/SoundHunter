@@ -89,6 +89,12 @@ The front photo includes labeled dimensions showing the approximate distances be
 | All microphone VCC | 3.3V |
 | All microphone GND | GND |
 
+### Fritzing Diagram
+
+The Fritzing layout below shows the current breadboard wiring for the ESP32, OLED, and four microphone modules.
+
+![SoundHunter Fritzing breadboard diagram](assert/Soundhunter_Fritzing_bb.jpg)
+
 ## Physical Layout
 
 Arrange the microphones in a cross-shaped layout:
