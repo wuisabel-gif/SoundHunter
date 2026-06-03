@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoundHunter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: #f7f5f0;
+      color: #1c1c1c;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(circle at top left, rgba(173, 153, 109, 0.18), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(74, 110, 92, 0.12), transparent 28%);
+    }
+
+    .nav-link {
+      position: relative;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      width: 0;
+      height: 1px;
+      transform: translateX(-50%);
+      background: #1c1c1c;
+      transition: width 0.25s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .section-divider {
+      height: 1px;
+      width: 160px;
+      margin: 5rem auto;
+      background: #d9d4ca;
+    }
+
+    .paper-card {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(28, 28, 28, 0.08);
+      box-shadow: 0 18px 50px rgba(40, 34, 23, 0.08);
+    }
+
+    .image-card {
+      overflow: hidden;
+      background: #ece8df;
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .image-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .eyebrow {
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <header class="px-6 pt-12 pb-8 md:pt-16">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col items-center text-center">
+        <p class="eyebrow text-stone-500 mb-4">ESP32 Acoustic Compass</p>
+        <h1 class="text-4xl md:text-6xl font-light tracking-[0.18em] uppercase">SoundHunter</h1>
+        <p class="max-w-3xl mt-8 text-lg md:text-xl text-stone-600 leading-relaxed font-light">
+          A directional sound-finding prototype that uses four microphones, an ESP32, and a compact OLED display to help locate nearby beeping devices like AirTags, phones, alarms, and other misplaced electronics.
+        </p>
+        <nav class="mt-10 flex flex-wrap items-center justify-center gap-5 md:gap-8">
+          <a href="#overview" class="nav-link text-stone-700">Overview</a>
+          <a href="#prototype" class="nav-link text-stone-700">Prototype</a>
+          <a href="#wiring" class="nav-link text-stone-700">Wiring</a>
+          <a href="#concepts" class="nav-link text-stone-700">Concepts</a>
+          <a href="#status" class="nav-link text-stone-700">Status</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 pb-24">
+    <section id="overview" class="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 items-start">
+      <div class="paper-card rounded-[2rem] p-8 md:p-10">
+        <p class="eyebrow text-stone-500 mb-4">Motivation</p>
+        <p class="text-stone-700 leading-relaxed text-lg font-light">
+          SoundHunter explores whether a low-cost microphone array can act like a simple acoustic compass. Even when tools like AirTag or Find My tell you an item is nearby, it can still be frustrating to figure out whether the sound is under a seat, inside a bag, or tucked into a hidden compartment. This project turns that last step into a directional search experience.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+          <div>
+            <h2 class="text-xl uppercase tracking-[0.14em] mb-4">Features</h2>
+            <ul class="space-y-3 text-stone-700 font-light leading-relaxed">
+              <li>ESP32-based embedded prototype</li>
+              <li>Four-microphone acoustic sensing</li>
+              <li>OLED compass-style direction display</li>
+              <li>Front, rear, left, right, and diagonal estimation</li>
+              <li>Noise smoothing and threshold-based filtering</li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="text-xl uppercase tracking-[0.14em] mb-4">Core Hardware</h2>
+            <ul class="space-y-3 text-stone-700 font-light leading-relaxed">
+              <li>ESP32-WROOM-32 DevKit</li>
+              <li>4x analog microphone modules</li>
+              <li>SSD1306 128x64 I2C OLED</li>
+              <li>Breadboard and jumper wires</li>
+              <li>USB power or portable battery supply</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="paper-card rounded-[2rem] p-8 md:p-10">
+        <p class="eyebrow text-stone-500 mb-4">How It Works</p>
+        <p class="text-stone-700 leading-relaxed font-light">
+          The ESP32 samples each microphone, compares front vs. rear and left vs. right sound levels, and estimates the dominant direction in real time.
+        </p>
+        <div class="mt-8 rounded-3xl bg-stone-100 px-6 py-5">
+          <pre class="text-sm md:text-base text-stone-700 whitespace-pre-wrap font-normal leading-relaxed">horizontal = right microphone level - left microphone level
+vertical   = front microphone level - rear microphone level</pre>
+        </div>
+        <p class="mt-6 text-stone-600 leading-relaxed font-light">
+          The firmware smooths microphone readings, applies a deadband to reduce jitter, and updates the OLED with the strongest apparent direction.
+        </p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="prototype">
+      <div class="text-center mb-12">
+        <p class="eyebrow text-stone-500 mb-3">Current Build</p>
+        <h2 class="text-3xl md:text-4xl font-light tracking-[0.14em] uppercase">Prototype Story</h2>
+      </div>
+
+      <div class="paper-card rounded-[2rem] p-8 md:p-10 mb-8">
+        <p class="text-stone-700 leading-relaxed text-lg font-light">
+          The current SoundHunter prototype is a breadboard-based build centered around an ESP32, four analog microphones, and a small OLED display. The front photo includes labeled dimensions showing the approximate distance from the center reference point to each sensor. The device is usually placed horizontally during use; it is shown vertically in the front image only to make the layout easier to read.
+        </p>
+        <p class="text-stone-700 leading-relaxed text-lg font-light mt-6">
+          The cardboard enclosure also became a small personal art project. As part of my collage hobby, I decorated it with postcards, travel images, and classical music album covers that I had collected on my cupboard. I really enjoyed that process because it made the prototype feel less like a temporary electronics build and more like an object with its own character.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <article class="paper-card rounded-[2rem] overflow-hidden">
+          <div class="image-card aspect-[4/5]">
+            <img src="assert/prototype_front.png" alt="SoundHunter prototype front with labeled sensor spacing">
+          </div>
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl uppercase tracking-[0.14em] mb-3">Prototype Front</h3>
+            <p class="text-stone-600 font-light leading-relaxed">
+              Front-facing view of the collage-covered prototype with measured sensor spacing and the OLED reference point visible in the center.
+            </p>
+          </div>
+        </article>
+
+        <article class="paper-card rounded-[2rem] overflow-hidden">
+          <div class="image-card aspect-[4/5]">
+            <img src="assert/prototype_back.png" alt="SoundHunter prototype back">
+          </div>
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl uppercase tracking-[0.14em] mb-3">Prototype Back</h3>
+            <p class="text-stone-600 font-light leading-relaxed">
+              Rear-side view showing the cardboard structure, taped wiring paths, and the physical layout behind the prototype shell.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-8 mt-8">
+        <article class="paper-card rounded-[2rem] overflow-hidden">
+          <div class="image-card aspect-[4/5]">
+            <img src="assert/microphone_sensor.png" alt="Analog microphone sensor module">
+          </div>
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl uppercase tracking-[0.14em] mb-3">Microphone Module</h3>
+            <p class="text-stone-600 font-light leading-relaxed">
+              The analog microphone module used for each directional sensor channel in the current prototype.
+            </p>
+          </div>
+        </article>
+
+        <article class="paper-card rounded-[2rem] p-8 md:p-10">
+          <p class="eyebrow text-stone-500 mb-4">Physical Layout</p>
+          <div class="rounded-3xl bg-stone-100 p-6">
+            <pre class="text-base md:text-lg text-stone-700 whitespace-pre-wrap font-normal leading-relaxed text-center">        Front Mic
+            ^
+Left Mic <- ESP32/OLED -> Right Mic
+            v
+        Rear Mic</pre>
+          </div>
+          <p class="mt-6 text-stone-600 font-light leading-relaxed">
+            For better results, the microphones should be spaced out as much as the enclosure allows. Larger spacing generally improves directional stability compared with placing the sensors too close together.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="wiring">
+      <div class="text-center mb-12">
+        <p class="eyebrow text-stone-500 mb-3">Build Reference</p>
+        <h2 class="text-3xl md:text-4xl font-light tracking-[0.14em] uppercase">Wiring & Diagram</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-8">
+        <article class="paper-card rounded-[2rem] p-8 md:p-10">
+          <h3 class="text-xl uppercase tracking-[0.14em] mb-6">Pin Mapping</h3>
+          <div class="space-y-8 text-stone-700 font-light">
+            <div>
+              <h4 class="text-sm uppercase tracking-[0.18em] text-stone-500 mb-3">OLED</h4>
+              <ul class="space-y-2">
+                <li>GND → GND</li>
+                <li>VCC → 3.3V</li>
+                <li>SDA → GPIO21</li>
+                <li>SCL → GPIO22</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-sm uppercase tracking-[0.18em] text-stone-500 mb-3">Microphones</h4>
+              <ul class="space-y-2">
+                <li>Front microphone OUT → GPIO32</li>
+                <li>Rear microphone OUT → GPIO33</li>
+                <li>Left microphone OUT → GPIO35</li>
+                <li>Right microphone OUT → GPIO34</li>
+                <li>All microphone VCC → 3.3V</li>
+                <li>All microphone GND → GND</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="paper-card rounded-[2rem] overflow-hidden">
+          <div class="image-card aspect-[5/3]">
+            <img src="assert/Soundhunter_Fritzing_bb.jpg" alt="SoundHunter Fritzing breadboard diagram">
+          </div>
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl uppercase tracking-[0.14em] mb-3">Fritzing Diagram</h3>
+            <p class="text-stone-600 font-light leading-relaxed">
+              A breadboard view showing the current ESP32, OLED, and four-microphone wiring layout used for the SoundHunter prototype.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="concepts">
+      <div class="text-center mb-12">
+        <p class="eyebrow text-stone-500 mb-3">Speculative Futures</p>
+        <h2 class="text-3xl md:text-4xl font-light tracking-[0.14em] uppercase">Product Concepts</h2>
+        <p class="max-w-3xl mx-auto mt-5 text-stone-600 text-lg font-light leading-relaxed">
+          These concept images were generated with ChatGPT as visual explorations of how SoundHunter could evolve from a prototype into a more polished consumer-facing device.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <article class="paper-card rounded-[2rem] overflow-hidden">
+          <div class="image-card aspect-[16/11]">
+            <img src="assert/Option1_FAC.png" alt="Foldable Acoustic Compass concept">
+          </div>
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl uppercase tracking-[0.14em] mb-3">Foldable Acoustic Compass</h3>
+            <p class="text-stone-600 font-light leading-relaxed">
+              A compact concept with extendable arms to increase microphone spacing during search mode.
+            </p>
+          </div>
+        </article>
+
+        <article class="paper-card rounded-[2rem] overflow-hidden">
+          <div class="image-card aspect-[16/11]">
+            <img src="assert/Option2_flashlight.png" alt="Sound Flashlight concept">
+          </div>
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl uppercase tracking-[0.14em] mb-3">Sound Flashlight</h3>
+            <p class="text-stone-600 font-light leading-relaxed">
+              A handheld detector that borrows the interaction model of a flashlight: point, sweep, and follow the strongest sound.
+            </p>
+          </div>
+        </article>
+
+        <article class="paper-card rounded-[2rem] overflow-hidden">
+          <div class="image-card aspect-[16/11]">
+            <img src="assert/Option3_rotatingsensorhead.png" alt="Rotating Sensor Head concept">
+          </div>
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl uppercase tracking-[0.14em] mb-3">Rotating Sensor Head</h3>
+            <p class="text-stone-600 font-light leading-relaxed">
+              A servo-assisted scanning concept that rotates a two-microphone head to locate the strongest sound angle.
+            </p>
+          </div>
+        </article>
+
+        <article class="paper-card rounded-[2rem] overflow-hidden">
+          <div class="image-card aspect-[16/11]">
+            <img src="assert/option4.png" alt="SoundHunter Acoustic Hot Cold Finder concept">
+          </div>
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl uppercase tracking-[0.14em] mb-3">Acoustic Hot/Cold Finder</h3>
+            <p class="text-stone-600 font-light leading-relaxed">
+              A pocket-sized device that guides the user with directional arrows and signal-strength feedback.
+            </p>
+          </div>
+        </article>
+
+        <article class="paper-card rounded-[2rem] overflow-hidden md:col-span-2">
+          <div class="image-card aspect-[16/10]">
+            <img src="assert/option5_airtag.png" alt="AirTag Hunter Wand concept">
+          </div>
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl uppercase tracking-[0.14em] mb-3">AirTag Hunter Wand</h3>
+            <p class="text-stone-600 font-light leading-relaxed max-w-3xl">
+              A slim directional wand optimized for left-right sweeping to help track down nearby beeping devices like AirTags, remotes, and phones.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="status" class="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-8">
+      <article class="paper-card rounded-[2rem] p-8 md:p-10">
+        <p class="eyebrow text-stone-500 mb-4">Project Status</p>
+        <h2 class="text-3xl font-light tracking-[0.14em] uppercase mb-6">Prototype In Progress</h2>
+        <ul class="space-y-4 text-stone-700 font-light leading-relaxed text-lg">
+          <li>Verify OLED display behavior</li>
+          <li>Verify each microphone channel</li>
+          <li>Improve denoising and directional stability</li>
+          <li>Continue refining the cardboard enclosure</li>
+          <li>Test with phone ringtone and AirTag beep</li>
+          <li>Demo video on the way</li>
+        </ul>
+      </article>
+
+      <article class="paper-card rounded-[2rem] p-8 md:p-10">
+        <p class="eyebrow text-stone-500 mb-4">Future Improvements</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-stone-700 font-light leading-relaxed">
+          <div>Add calibration for microphone gain differences</div>
+          <div>Add AirTag-specific beep detection</div>
+          <div>Add true TDOA direction estimation</div>
+          <div>Add a 3D-printed enclosure</div>
+          <div>Add battery power</div>
+          <div>Add LED arrow indicators</div>
+          <div>Add Bluetooth or Wi-Fi dashboard</div>
+          <div>Add logging for signal strength over time</div>
+          <div>Compare analog microphones with I2S MEMS microphones</div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
